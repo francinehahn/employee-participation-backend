@@ -5,34 +5,35 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node ./build/src/index.js",
-    "dev": "ts-node-dev ./src/index.ts",
-    "migrations": "ts-node-dev ./src/migrations/migrations.ts"
+    "dev": "ts-node-dev ./src/index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/francinehahn/employee-participation-backend.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Francine Hahn",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/francinehahn/employee-participation-backend/issues"
   },
   "homepage": "https://github.com/francinehahn/employee-participation-backend#readme",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
-    "@types/knex": "^0.16.1",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/mongoose": "^5.11.97",
     "@types/typescript": "^2.0.0",
     "dotenv": "^16.0.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.3"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "knex": "^2.4.2",
-    "mysql": "^2.18.1"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3"
   }
 }

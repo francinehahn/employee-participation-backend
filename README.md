@@ -1,7 +1,7 @@
-<h1 align="center">employee-participation-backend</h1>
+<h1 align="center">API REST Employee Participation</h1>
 
 ##  ℹ️About
-This is an API REST that allows employers to register the participation rate of their employees. Data architecture, user authentication, cryptography, unitary tests and integration tests were implemented. CRUD (Create, Read, Update and Delete) requests were built respecting the semantics and organization necessary for the elaboration of an API with RESTful principles.
+This is an API REST that allows employers to register the participation rate of their employees in each of their projects. Data architecture, user authentication, cryptography, unitary tests and integration tests were implemented. CRUD (Create, Read, Update and Delete) requests were built respecting the semantics and organization necessary for the elaboration of an API with RESTful principles.
 
 ## 🔗Documentation
 
@@ -11,8 +11,8 @@ This is an API REST that allows employers to register the participation rate of 
 - TypeScript
 - Node.js
 - Express.js
-- Knex.js
-- MySQL
+- Mongoose
+- MongoDB
 - Jest.js
 
 ## 🛰Running the project
@@ -31,21 +31,14 @@ This is an API REST that allows employers to register the participation rate of 
 Create a file .env and complete the following variables:
 <pre>
   <code>
-    DB_HOST = ""
-    DB_USER = ""
     DB_PASSWORD = ""
-    DB_SCHEMA = ""
-
     PORT = 3003
     JWT_KEY = ""
     BCRYPT_COST = 12
   </code>
 </pre>
 
-To add the tables to your database, run the following command:
-<pre>
-  <code>npm run migrations</code>
-</pre>
+Don't forget to create a MongoDB cluster and then add the link that was provided to you to the connection file so you can use your own database.
 
 To initialize the project:
 <pre>
