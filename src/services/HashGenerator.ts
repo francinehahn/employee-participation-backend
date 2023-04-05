@@ -4,7 +4,7 @@ import { IHashGenerator } from "../model/IHashGenerator"
 
 dotenv.config()
 
-export class HashManager implements IHashGenerator {
+export class HashGenerator implements IHashGenerator {
     generateHash = async (plaintext: string): Promise<string> => {
         const cost: number = Number(process.env.BCRYPT_COST)
         const salt: string = await bcrypt.genSalt(cost)
