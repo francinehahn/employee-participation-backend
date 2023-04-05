@@ -1,11 +1,25 @@
 <h1 align="center">API REST Employee Participation</h1>
 
 ##  ℹ️About
-This is an API REST that allows employers to register the participation rate of their employees in each of their projects. Data architecture, user authentication, cryptography, unitary tests and integration tests were implemented. CRUD (Create, Read, Update and Delete) requests were built respecting the semantics and organization necessary for the elaboration of an API with RESTful principles.
+This is an API REST that allows employers to register the participation rate of their employees in each of their projects. Data architecture, user authentication, cryptography, unitary tests were implemented. CRUD (Create, Read, Update and Delete) requests were built respecting the semantics and organization necessary for the elaboration of an API with RESTful principles.
 
 ## 🔗Documentation
 
 ## ☑️Requests
+- Signup OK
+- Login OK
+- Get Account Info
+- Get All Employees: filter active or inactive
+- Get All Projects
+- Register an Employee
+- Register a Project
+- Add Employee to a Project
+- Edit Employee participation in a project
+- Edit Project Info
+- Delete Account
+- Delete A Project
+- Delete An Employee From the User Account: desde que não esteja cadastrado em nenhum projeto
+- Delete An Employee From A Project
 
 ## 💻Technologies
 - TypeScript
