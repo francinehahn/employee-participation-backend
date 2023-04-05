@@ -1,3 +1,6 @@
+import { Employee } from "./Employee"
+import { Project } from "./Project"
+
 export class User {
     constructor (
         private user_name: string,
@@ -22,4 +25,21 @@ export interface inputSignupDTO {
 export interface inputLoginDTO {
     email: string,
     password: string
+}
+
+export interface outputGetUserBy {
+    _id: string,
+    user_name: string,
+    email: string,
+    password: string,
+    employees: Employee[],
+    projects: Project[]
+}
+
+export interface outputUserInfo {
+    _id: string,
+    user_name: string,
+    email: string,
+    employees: Employee[],
+    projects: Project[]
 }
