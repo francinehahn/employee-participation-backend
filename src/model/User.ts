@@ -12,3 +12,14 @@ export class User {
         this.employees = employees
     }
 }
+
+export interface inputSignupDTO {
+    userName: string,
+    email: string,
+    password: string
+}
+
+export interface inputLoginDTO {
+    email: string,
+    password: string
+}
