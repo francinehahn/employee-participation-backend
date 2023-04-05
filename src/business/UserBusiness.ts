@@ -1,8 +1,8 @@
 import { CustomError } from "../error/CustomError"
-import { EmailNotFound, IncorrectPassword, InvalidEmail, InvalidPassword, InvalidUserName, MissingEmail, MissingPassword, MissingUserName } from "../error/userErrors"
+import { EmailNotFound, IncorrectPassword, InvalidEmail, InvalidPassword, InvalidUserName, MissingEmail, MissingPassword, MissingToken, MissingUserName } from "../error/userErrors"
 import { IAuthenticator } from "../model/IAuthenticator"
 import { IHashGenerator } from "../model/IHashGenerator"
-import { User, inputLoginDTO, inputSignupDTO } from "../model/User"
+import { User, inputLoginDTO, inputSignupDTO, outputUserInfo } from "../model/User"
 import { UserRepository } from "../model/UserRepository"
 
 export class UserBusiness {
@@ -67,8 +67,32 @@ export class UserBusiness {
                 throw new IncorrectPassword()
             }
 
-            const token = await this.authenticator.generateToken(findUser._id)
+            const token = await this.authenticator.generateToken({id: findUser._id})
             return token
+
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public getAccountInfo = async (token: string): Promise<outputUserInfo> => {
+        try {
+            if (!token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(token)
+            const user = await this.userDatabase.getUserById(id)
+            
+            const userOutput = {
+                _id: user?._id || "",
+                user_name: user?.user_name || "",
+                email: user?.email || "",
+                employees: user?.employees || [],
+                projects: user?.projects || []
+            }
+
+            return userOutput
 
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)

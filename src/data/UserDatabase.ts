@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError"
-import { User } from "../model/User"
+import { User, outputGetUserBy } from "../model/User"
 import { UserModel } from "../model/UserModel"
 import { UserRepository } from "../model/UserRepository"
 
@@ -13,9 +13,17 @@ export class UserDatabase implements UserRepository {
         }
     }
 
-    public getUserByEmail = async (email: string): Promise<any> => {
+    public getUserByEmail = async (email: string): Promise<outputGetUserBy | null> => {
         try {
             return await UserModel.findOne({email})
+        } catch (err: any) {
+            throw new CustomError(err.statusCode, err.message)
+        }
+    }
+
+    public getUserById = async (id: string): Promise<outputGetUserBy | null> => {
+        try {
+            return await UserModel.findOne({_id: id})
         } catch (err: any) {
             throw new CustomError(err.statusCode, err.message)
         }

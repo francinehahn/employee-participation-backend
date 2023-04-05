@@ -1,6 +1,7 @@
-import { User } from "./User"
+import { User, outputGetUserBy } from "./User"
 
 export interface UserRepository {
     signup (newUser: User): Promise<void>
-    getUserByEmail (email: string): Promise<any>
+    getUserByEmail (email: string): Promise<outputGetUserBy | null>
+    getUserById (id: string): Promise<outputGetUserBy | null>
 }
