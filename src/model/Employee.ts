@@ -18,3 +18,8 @@ export interface inputRegisterEmployeeDTO {
     status: employeeStatus,
     token: string
 }
+
+export interface inputGetAllEmployeesDTO {
+    search: string,
+    token: string
+}

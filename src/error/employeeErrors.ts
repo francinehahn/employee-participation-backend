@@ -29,3 +29,15 @@ export class DuplicateEmployee extends CustomError {
         super(409, "Employee already registered.")
     }
 }
+
+export class NoEmployeeRegistered extends CustomError {
+    constructor () {
+        super(422, "No employees have been registered yet.")
+    }
+}
+
+export class InvalidSearchTerm extends CustomError {
+    constructor () {
+        super(422, "The search term must be either active or inactive.")
+    }
+}

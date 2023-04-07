@@ -13,3 +13,4 @@ const employeeBusiness = new EmployeeBusiness(employeeDatabase, userDatabase, ne
 const employeeController = new EmployeeController(employeeBusiness)
 
 employeeRouter.patch("/register", (req, res) => employeeController.registerEmployee(req, res))
+employeeRouter.get("/", (req, res) => employeeController.getAllEmployees(req, res))
