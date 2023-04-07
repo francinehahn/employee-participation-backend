@@ -1,4 +1,4 @@
-import { User, outputGetUserBy } from "./User"
+import { User, outputGetUserBy } from "../User"
 
 export interface UserRepository {
     signup (newUser: User): Promise<void>

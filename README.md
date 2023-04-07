@@ -6,14 +6,14 @@ This is an API REST that allows employers to register the participation rate of 
 ## 🔗Documentation
 
 ## ☑️Requests
-- Signup OK
-- Login OK
-- Get Account Info
+- Signup OK!!!!!!!!!!!
+- Login OK!!!!!!!!!
+- Get Account Info OK!!!!!!!!
 - Get All Employees: filter active or inactive
 - Get All Projects
-- Register an Employee
-- Register a Project
-- Add Employee to a Project
+- Register an Employee OK!!!!!!!!
+- Register a Project OK!!!!!!!!
+- Add Employee to a Project !!!!!!
 - Edit Employee participation in a project
 - Edit Project Info
 - Delete Account

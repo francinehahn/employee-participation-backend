@@ -3,7 +3,7 @@ import { EmailNotFound, IncorrectPassword, InvalidEmail, InvalidPassword, Invali
 import { IAuthenticator } from "../model/IAuthenticator"
 import { IHashGenerator } from "../model/IHashGenerator"
 import { User, inputLoginDTO, inputSignupDTO, outputUserInfo } from "../model/User"
-import { UserRepository } from "../model/UserRepository"
+import { UserRepository } from "../model/repositories/UserRepository"
 
 export class UserBusiness {
     constructor (
@@ -85,11 +85,11 @@ export class UserBusiness {
             const user = await this.userDatabase.getUserById(id)
             
             const userOutput = {
-                _id: user?._id || "",
-                user_name: user?.user_name || "",
-                email: user?.email || "",
-                employees: user?.employees || [],
-                projects: user?.projects || []
+                _id: user!._id,
+                user_name: user!.user_name,
+                email: user!.email,
+                employees: user!.employees,
+                projects: user!.projects
             }
 
             return userOutput
