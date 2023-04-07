@@ -12,4 +12,17 @@ export class EmployeeDatabase implements EmployeeRepository {
             throw new CustomError(error.statusCode, error.message)
         }
     }
+
+    public getAllEmployees = async (id: string, search: string): Promise<Employee[] | []> => {
+        try {
+            const result = await UserModel.find(
+                {'_id': id},
+                {_id: 0, user_name: 0, email: 0, password: 0, projects: 0}
+            )
+
+            return !search? result[0].employees : result[0].employees.filter(item => item.status === search)
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
 }
