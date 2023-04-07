@@ -126,4 +126,19 @@ export class ProjectBusiness {
             throw new CustomError(error.statusCode, error.message)
         }
     }
+
+    public getAllProjects = async (token: string): Promise<Project[]> => {
+        try {
+            if (!token) {
+                throw new MissingToken()
+            }
+            
+            const {id} = await this.authenticator.getTokenData(token)
+            const result = await this.projectDatabase.getAllProjects(id)
+            return result
+            
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
 }

@@ -14,3 +14,4 @@ const projectController = new ProjectController(projectBusiness)
 
 projectRouter.patch("/register", (req, res) => projectController.registerProject(req, res))
 projectRouter.patch("/add-employee", (req, res) => projectController.addEmployeeToAproject(req, res))
+projectRouter.get("/", (req, res) => projectController.getAllProjects(req, res))
