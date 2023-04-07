@@ -36,7 +36,7 @@ export class EmployeeBusiness {
             }
 
             const user = await this.userDatabase.getUserById(id)
-            const findEmployee = user!.employees.filter(employee => employee.employee_name === input.employeeName)
+            const findEmployee = user!.employees.filter((employee: Employee) => employee.employee_name === input.employeeName)
             if (findEmployee.length > 0) {
                 throw new DuplicateEmployee()
             }

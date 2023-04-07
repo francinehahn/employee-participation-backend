@@ -2,7 +2,9 @@ import { CustomError } from "../error/CustomError"
 import { MissingEmployeeName } from "../error/employeeErrors"
 import { DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
+import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
+import { collaborator } from "../model/Project"
 import { Project, addCollaboratorDTO, inputAddEmployeeToAprojectDTO, inputRegisterProjectDTO } from "../model/Project"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
@@ -52,7 +54,7 @@ export class ProjectBusiness {
 
             const user = await this.userDatabase.getUserById(id)
 
-            const findProject = user!.projects.filter(project => project.project_name === input.projectName)
+            const findProject = user!.projects.filter((project: Project) => project.project_name === input.projectName)
             if (findProject.length > 0) {
                 throw new DuplicateProject()
             }
@@ -78,7 +80,7 @@ export class ProjectBusiness {
             }
 
             const user = await this.userDatabase.getUserById(id)
-            const getProject = user!.projects.filter(project => project.project_name === input.projectName)
+            const getProject = user!.projects.filter((project: Project) => project.project_name === input.projectName)
 
             if (getProject.length === 0) {
                 throw new ProjectNotFound()
@@ -88,7 +90,7 @@ export class ProjectBusiness {
                 throw new MissingEmployeeName()
             }
 
-            const getEmployee = user!.employees.filter(employee => employee.employee_name === input.employeeName)
+            const getEmployee = user!.employees.filter((employee: Employee) => employee.employee_name === input.employeeName)
             if (getEmployee.length === 0) {
                 throw new EmployeeNotFound()
             }
@@ -102,7 +104,7 @@ export class ProjectBusiness {
 
             if (getProject[0].collaborators.length > 0) {
                 let sum = 0
-                getProject[0].collaborators.forEach(collaborator => {
+                getProject[0].collaborators.forEach((collaborator: collaborator) => {
                     sum += collaborator.participation
                 })
 

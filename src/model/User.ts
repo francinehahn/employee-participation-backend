@@ -27,16 +27,14 @@ export interface inputLoginDTO {
     password: string
 }
 
-export interface outputGetUserBy {
+export interface outputGetUserByEmailDTO {
     _id: string,
     user_name: string,
     email: string,
-    password: string,
-    employees: Employee[],
-    projects: Project[]
+    password: string
 }
 
-export interface outputUserInfo {
+export interface outputUserInfoDTO {
     _id: string,
     user_name: string,
     email: string,
