@@ -5,12 +5,16 @@ export enum employeeStatus {
 
 export class Employee {
     constructor (
-        private first_name: string,
-        private last_name: string,
-        private status: employeeStatus
+        readonly employee_name: string,
+        readonly status: employeeStatus
     ) {
-        this.first_name = first_name
-        this.last_name = last_name
-        this,status = status
+        this.employee_name = employee_name
+        this.status = status
     }
+}
+
+export interface inputRegisterEmployeeDTO {
+    employeeName: string,
+    status: employeeStatus,
+    token: string
 }

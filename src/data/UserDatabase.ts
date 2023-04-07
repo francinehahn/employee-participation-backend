@@ -1,7 +1,7 @@
 import { CustomError } from "../error/CustomError"
 import { User, outputGetUserBy } from "../model/User"
 import { UserModel } from "../model/UserModel"
-import { UserRepository } from "../model/UserRepository"
+import { UserRepository } from "../model/repositories/UserRepository"
 
 
 export class UserDatabase implements UserRepository {

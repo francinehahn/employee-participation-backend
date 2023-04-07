@@ -3,11 +3,11 @@ import { Project } from "./Project"
 
 export class User {
     constructor (
-        private user_name: string,
-        private email: string,
-        private password: string,
-        private employees: [],
-        private projects: []
+        readonly user_name: string,
+        readonly email: string,
+        readonly password: string,
+        readonly employees: {},
+        readonly projects: {}
     ) {
         this.user_name = user_name
         this.email = email
