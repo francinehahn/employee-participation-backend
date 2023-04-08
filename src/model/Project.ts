@@ -37,3 +37,25 @@ export interface addCollaboratorDTO {
     employeeName: string,
     participation: number
 }
+
+export interface inputEditParticipationDTO {
+    projectName: string,
+    employeeName: string,
+    participation: number,
+    token: string
+}
+
+export interface updateParticipationDTO {
+    id: string,
+    projectName: string,
+    employeeName: string,
+    participation: number
+}
+
+export interface inputEditProjectInfoDTO {
+    currentProjectName: string,
+    newProjectName: string,
+    startDate: string,
+    endDate: string,
+    token: string
+}

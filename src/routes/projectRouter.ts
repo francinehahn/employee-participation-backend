@@ -13,5 +13,7 @@ const projectBusiness = new ProjectBusiness(projectDatabase, userDatabase, new A
 const projectController = new ProjectController(projectBusiness)
 
 projectRouter.patch("/register", (req, res) => projectController.registerProject(req, res))
+projectRouter.patch("/edit", (req, res) => projectController.editProjectInfo(req, res))
 projectRouter.patch("/add-employee", (req, res) => projectController.addEmployeeToAproject(req, res))
+projectRouter.patch("/edit-employee", (req, res) => projectController.editEmployeeParticipation(req, res))
 projectRouter.get("/", (req, res) => projectController.getAllProjects(req, res))
