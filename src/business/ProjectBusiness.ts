@@ -1,10 +1,10 @@
 import { CustomError } from "../error/CustomError"
 import { MissingEmployeeName } from "../error/employeeErrors"
-import { DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
+import { CollaboratorNotFound, DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingCollaborator, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
-import { collaborator, deleteProjectDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, updateParticipationDTO } from "../model/Project"
+import { collaborator, deleteCollaboratorDTO, deleteProjectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, updateParticipationDTO } from "../model/Project"
 import { Project, addCollaboratorDTO, inputAddEmployeeToAprojectDTO, inputRegisterProjectDTO } from "../model/Project"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
@@ -67,7 +67,7 @@ export class ProjectBusiness {
         }
     }
 
-    public addEmployeeToAproject = async (input: inputAddEmployeeToAprojectDTO): Promise<void> => {
+    public assignCollaboratorToAproject = async (input: inputAddEmployeeToAprojectDTO): Promise<void> => {
         try {
             if (!input.token) {
                 throw new MissingToken()
@@ -125,7 +125,7 @@ export class ProjectBusiness {
                 participation: input.participation
             }
 
-            await this.projectDatabase.addEmpoyeeToAproject(addCollaborator)
+            await this.projectDatabase.assignCollaboratorToAproject(addCollaborator)
             
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
@@ -147,7 +147,7 @@ export class ProjectBusiness {
         }
     }
 
-    public editEmployeeParticipation = async (input: inputEditParticipationDTO): Promise<void> => {
+    public editCollaboratorParticipation = async (input: inputEditParticipationDTO): Promise<void> => {
         try {
             if (!input.token) {
                 throw new MissingToken()
@@ -171,7 +171,6 @@ export class ProjectBusiness {
             }
             
             const getEmployee = getProject[0].collaborators.filter((employee: collaborator) => employee.employee_name === input.employeeName)
-            const prevParticipation = getEmployee[0].participation
 
             if (getEmployee.length === 0) {
                 throw new EmployeeNotFound()
@@ -184,24 +183,21 @@ export class ProjectBusiness {
                 throw new InvalidParticipation()
             }
 
-            if (getProject[0].collaborators.length > 0) {
-                const collaborators = getProject[0].collaborators.filter((collaborator: collaborator) => collaborator.employee_name !==  input.employeeName)
-                
-                let sum = 0
-                collaborators.forEach((collaborator: collaborator) => {
-                    sum += collaborator.participation
-                })
+            const collaborators = getProject[0].collaborators.filter((collaborator: collaborator) => collaborator.employee_name !==  input.employeeName)
+            let sum = 0
+            
+            collaborators.forEach((collaborator: collaborator) => {
+                sum += collaborator.participation
+            })
 
-                if (sum + input.participation > 100) {
-                    throw new ParticipationRateExceeded()
-                }
+            if (sum + input.participation > 100) {
+                throw new ParticipationRateExceeded()
             }
             
-            const pull: updateParticipationDTO = {
+            const pull: deleteCollaboratorDTO = {
                 id,
                 projectName: input.projectName,
-                employeeName: input.employeeName,
-                participation: prevParticipation
+                collaborator: input.employeeName
             }
 
             const push: updateParticipationDTO = {
@@ -212,7 +208,7 @@ export class ProjectBusiness {
             }
 
             await this.projectDatabase.deleteCollaborator(pull)
-            await this.projectDatabase.addEmpoyeeToAproject(push)
+            await this.projectDatabase.assignCollaboratorToAproject(push)
             
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
@@ -312,6 +308,47 @@ export class ProjectBusiness {
             
             await this.projectDatabase.deleteProject(deleteData)
             
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public deleteCollaborator = async (input: inputDeleteCollaboratorDTO): Promise<void> => {
+        try {
+            if (!input.token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(input.token)
+
+            if (!input.projectName) {
+                throw new MissingProjectName()
+            }
+
+            const user = await this.userDatabase.getUserById(id)
+            const getProject = user!.projects.filter((project: Project) => project.project_name === input.projectName)
+
+            if (getProject.length === 0) {
+                throw new ProjectNotFound()
+            }
+
+            if (!input.collaborator) {
+                throw new MissingCollaborator()
+            }
+            
+            const getCollaborator = getProject[0].collaborators.filter((collaborator: collaborator) => collaborator.employee_name === input.collaborator)
+            if (getCollaborator.length === 0) {
+                throw new CollaboratorNotFound()
+            }
+
+            const deleteData: deleteCollaboratorDTO = {
+                id,
+                projectName: input.projectName,
+                collaborator: input.collaborator
+            }
+
+            await this.projectDatabase.deleteCollaborator(deleteData)
+
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
         }

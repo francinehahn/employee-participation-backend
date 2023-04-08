@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError"
-import { Project, addCollaboratorDTO, deleteProjectDTO, updateParticipationDTO } from "../model/Project"
+import { Project, addCollaboratorDTO, deleteCollaboratorDTO, deleteProjectDTO, updateParticipationDTO } from "../model/Project"
 import { UserModel } from "../model/UserModel"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 
@@ -13,7 +13,7 @@ export class ProjectDatabase implements ProjectRepository {
         }
     }
 
-    public addEmpoyeeToAproject = async (newCollaborator: addCollaboratorDTO): Promise<void> => {
+    public assignCollaboratorToAproject = async (newCollaborator: addCollaboratorDTO): Promise<void> => {
         try {
             await UserModel.updateOne(
                 {'_id': newCollaborator.id, 'projects.project_name': newCollaborator.projectName},
@@ -40,13 +40,12 @@ export class ProjectDatabase implements ProjectRepository {
         }
     }
 
-    public deleteCollaborator = async (collaborator: updateParticipationDTO): Promise<void> => {
+    public deleteCollaborator = async (collaborator: deleteCollaboratorDTO): Promise<void> => {
         try {
             await UserModel.updateOne(
                 {'_id': collaborator.id, 'projects.project_name': collaborator.projectName},
                 {$pull: {'projects.$.collaborators': {
-                    employee_name: collaborator.employeeName,
-                    participation: collaborator.participation
+                    employee_name: collaborator.collaborator
                 }}}
             )
         } catch (error: any) {

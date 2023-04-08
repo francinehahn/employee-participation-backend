@@ -1,6 +1,6 @@
 import { ProjectBusiness } from "../business/ProjectBusiness"
 import { Request, Response } from "express"
-import { inputAddEmployeeToAprojectDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO } from "../model/Project"
+import { inputAddEmployeeToAprojectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO } from "../model/Project"
 
 
 export class ProjectController {
@@ -25,7 +25,7 @@ export class ProjectController {
         }
     }
 
-    public addEmployeeToAproject = async (req: Request, res: Response): Promise<void> => {
+    public assignCollaboratorToAproject = async (req: Request, res: Response): Promise<void> => {
         try {
             const input: inputAddEmployeeToAprojectDTO = {
                 projectName: req.body.projectName,
@@ -34,7 +34,7 @@ export class ProjectController {
                 token: req.headers.authorization as string
             }
 
-            await this.projectBusiness.addEmployeeToAproject(input)
+            await this.projectBusiness.assignCollaboratorToAproject(input)
             res.status(201).send("Success! An employee has been assigned to a project!")
 
         } catch (error: any) {
@@ -53,7 +53,7 @@ export class ProjectController {
         }
     }
 
-    public editEmployeeParticipation = async (req: Request, res: Response): Promise<void> => {
+    public editCollaboratorParticipation = async (req: Request, res: Response): Promise<void> => {
         try {
             const input: inputEditParticipationDTO = {
                 projectName: req.body.projectName,
@@ -62,8 +62,8 @@ export class ProjectController {
                 token: req.headers.authorization as string
             }
 
-            await this.projectBusiness.editEmployeeParticipation(input)
-            res.status(201).send("Succes! The employee participation has been updated.")
+            await this.projectBusiness.editCollaboratorParticipation(input)
+            res.status(201).send("Success! The employee participation has been updated.")
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)
@@ -81,7 +81,7 @@ export class ProjectController {
             }
 
             await this.projectBusiness.editProjectInfo(input)
-            res.status(201).send("Succes! The project information has been updated.")
+            res.status(201).send("Success! The project information has been updated.")
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)
@@ -96,7 +96,23 @@ export class ProjectController {
             }
 
             await this.projectBusiness.deleteProject(input)
-            res.status(201).send("Succes! The project has been deleted.")
+            res.status(201).send("Success! The project has been deleted.")
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public deleteCollaborator = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const input: inputDeleteCollaboratorDTO = {
+                projectName: req.body.projectName,
+                collaborator: req.body.collaborator,
+                token: req.headers.authorization as string
+            }
+
+            await this.projectBusiness.deleteCollaborator(input)
+            res.status(201).send("Success! The collaborator has been deleted.")
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)
