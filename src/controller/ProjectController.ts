@@ -1,6 +1,6 @@
 import { ProjectBusiness } from "../business/ProjectBusiness"
 import { Request, Response } from "express"
-import { inputAddEmployeeToAprojectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO } from "../model/Project"
+import { inputAddEmployeeToAprojectDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO } from "../model/Project"
 
 
 export class ProjectController {
@@ -82,6 +82,21 @@ export class ProjectController {
 
             await this.projectBusiness.editProjectInfo(input)
             res.status(201).send("Succes! The project information has been updated.")
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public deleteProject = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const input: inputDeleteProjectDTO = {
+                projectName: req.body.projectName,
+                token: req.headers.authorization as string
+            }
+
+            await this.projectBusiness.deleteProject(input)
+            res.status(201).send("Succes! The project has been deleted.")
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)

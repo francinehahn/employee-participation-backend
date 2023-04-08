@@ -59,3 +59,13 @@ export interface inputEditProjectInfoDTO {
     endDate: string,
     token: string
 }
+
+export interface inputDeleteProjectDTO {
+    projectName: string,
+    token: string
+}
+
+export interface deleteProjectDTO {
+    id: string,
+    projectName: string
+}

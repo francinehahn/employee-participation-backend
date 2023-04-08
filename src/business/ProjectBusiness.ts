@@ -4,7 +4,7 @@ import { DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
-import { collaborator, inputEditParticipationDTO, inputEditProjectInfoDTO, updateParticipationDTO } from "../model/Project"
+import { collaborator, deleteProjectDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, updateParticipationDTO } from "../model/Project"
 import { Project, addCollaboratorDTO, inputAddEmployeeToAprojectDTO, inputRegisterProjectDTO } from "../model/Project"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
@@ -280,6 +280,37 @@ export class ProjectBusiness {
             }
 
             await this.projectDatabase.editProjectInfo(id, input.currentProjectName, updateProject)
+            
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public deleteProject = async (input: inputDeleteProjectDTO): Promise<void> => {
+        try {
+            if (!input.token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(input.token)
+
+            if (!input.projectName) {
+                throw new MissingProjectName()
+            }
+
+            const user = await this.userDatabase.getUserById(id)
+            const getProject = user!.projects.filter((project: Project) => project.project_name === input.projectName)
+
+            if (getProject.length === 0) {
+                throw new ProjectNotFound()
+            }
+
+            const deleteData: deleteProjectDTO = {
+                id,
+                projectName: input.projectName
+            }
+            
+            await this.projectDatabase.deleteProject(deleteData)
             
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
