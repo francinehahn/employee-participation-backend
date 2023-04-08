@@ -69,3 +69,15 @@ export interface deleteProjectDTO {
     id: string,
     projectName: string
 }
+
+export interface inputDeleteCollaboratorDTO {
+    projectName: string,
+    collaborator: string,
+    token: string
+}
+
+export interface deleteCollaboratorDTO {
+    id: string,
+    projectName: string,
+    collaborator: string
+}

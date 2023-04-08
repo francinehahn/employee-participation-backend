@@ -84,3 +84,15 @@ export class DuplicateCollaborator extends CustomError {
         super(409, "This employee has already been assigned to this project.")
     }
 }
+
+export class MissingCollaborator extends CustomError {
+    constructor () {
+        super(422, "Provide the collaborator's full name.")
+    }
+}
+
+export class CollaboratorNotFound extends CustomError {
+    constructor () {
+        super(404, "This collaborator is not assigned to the provided project.")
+    }
+}
