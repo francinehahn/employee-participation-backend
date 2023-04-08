@@ -1,4 +1,4 @@
-import { Project, addCollaboratorDTO, updateParticipationDTO } from "../Project"
+import { Project, addCollaboratorDTO, deleteProjectDTO, updateParticipationDTO } from "../Project"
 
 
 export interface ProjectRepository {
@@ -7,4 +7,5 @@ export interface ProjectRepository {
     getAllProjects (id: string): Promise<Project[] | []>
     deleteCollaborator (collaborator: updateParticipationDTO): Promise<void>
     editProjectInfo (id: string, currentProjectName: string, project: Project): Promise<void>
+    deleteProject (data: deleteProjectDTO): Promise<void>
 }
