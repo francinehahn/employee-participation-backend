@@ -16,8 +16,9 @@ This is an API REST that allows employers to register the participation rate of 
 - Register an Employee OK!!!!!!!!
 - Register a Project OK!!!!!!!!
 - Add Employee to a Project OK!!!!!!!!
-- Edit Employee participation in a project
-- Edit Project Info
+- Edit Employee participation in a project OK!!!!!!!!!!!!!!!
+- Edit Project Info OK!!!!!!!!!!!!
+
 - Delete Account
 - Delete A Project
 - Delete An Employee From the User Account: desde que não esteja cadastrado em nenhum projeto

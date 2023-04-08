@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError"
-import { Project, addCollaboratorDTO, collaborator } from "../model/Project"
+import { Project, addCollaboratorDTO, updateParticipationDTO } from "../model/Project"
 import { UserModel } from "../model/UserModel"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 
@@ -35,6 +35,31 @@ export class ProjectDatabase implements ProjectRepository {
             )
 
             return result[0].projects
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public deleteCollaborator = async (collaborator: updateParticipationDTO): Promise<void> => {
+        try {
+            await UserModel.updateOne(
+                {'_id': collaborator.id, 'projects.project_name': collaborator.projectName},
+                {$pull: {'projects.$.collaborators': {
+                    employee_name: collaborator.employeeName,
+                    participation: collaborator.participation
+                }}}
+            )
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public editProjectInfo = async (id: string, currentProjectName: string, project: Project): Promise<void> => {
+        try {
+            await UserModel.updateOne(
+                {_id: id, 'projects.project_name': currentProjectName},
+                {$set: {'projects.$': project}}
+            )
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
         }
