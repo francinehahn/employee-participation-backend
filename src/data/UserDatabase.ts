@@ -28,4 +28,12 @@ export class UserDatabase implements UserRepository {
             throw new CustomError(err.statusCode, err.message)
         }
     }
+
+    public deleteAccount = async (id: string): Promise<void> => {
+        try {
+            await UserModel.deleteOne({_id: id})
+        } catch (err: any) {
+            throw new CustomError(err.statusCode, err.message)
+        }
+    }
 }

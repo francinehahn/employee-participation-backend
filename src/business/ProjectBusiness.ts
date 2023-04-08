@@ -1,6 +1,6 @@
 import { CustomError } from "../error/CustomError"
 import { MissingEmployeeName } from "../error/employeeErrors"
-import { DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
+import { DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
@@ -90,6 +90,11 @@ export class ProjectBusiness {
                 throw new MissingEmployeeName()
             }
 
+            const duplicateCollaborator = getProject[0].collaborators.filter((collaborator: collaborator) => collaborator.employee_name === input.employeeName)
+            if (duplicateCollaborator.length > 0) {
+                throw new DuplicateCollaborator()
+            }
+
             const getEmployee = user!.employees.filter((employee: Employee) => employee.employee_name === input.employeeName)
             if (getEmployee.length === 0) {
                 throw new EmployeeNotFound()
@@ -165,7 +170,7 @@ export class ProjectBusiness {
                 throw new MissingEmployeeName()
             }
             
-            const getEmployee = user!.employees.filter((employee: Employee) => employee.employee_name === input.employeeName)
+            const getEmployee = getProject[0].collaborators.filter((employee: collaborator) => employee.employee_name === input.employeeName)
             const prevParticipation = getEmployee[0].participation
 
             if (getEmployee.length === 0) {
@@ -231,6 +236,13 @@ export class ProjectBusiness {
 
             if (getProject.length === 0) {
                 throw new ProjectNotFound()
+            }
+
+            if (input.newProjectName) {
+                const duplicateProjectName = user!.projects.filter((project: Project) => input.newProjectName === project.project_name)
+                if (duplicateProjectName.length > 0 && input.newProjectName !== getProject[0].project_name) {
+                    throw new DuplicateProject()
+                }
             }
 
             if (!input.newProjectName) {

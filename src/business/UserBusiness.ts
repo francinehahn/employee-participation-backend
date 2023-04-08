@@ -84,7 +84,21 @@ export class UserBusiness {
             const {id} = await this.authenticator.getTokenData(token)
             const user = await this.userDatabase.getUserById(id)
     
-            return user
+            return user!
+
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public deleteAccount = async (token: string): Promise<void> => {
+        try {
+            if (!token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(token)
+            await this.userDatabase.deleteAccount(id)
 
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)

@@ -78,3 +78,9 @@ export class ParticipationRateExceeded extends CustomError {
         super(422, "The participation of all employees together must be a maximum of 100%.")
     }
 }
+
+export class DuplicateCollaborator extends CustomError {
+    constructor () {
+        super(409, "This employee has already been assigned to this project.")
+    }
+}
