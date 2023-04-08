@@ -18,11 +18,11 @@ This is an API REST that allows employers to register the participation rate of 
 - Add Employee to a Project OK!!!!!!!!
 - Edit Employee participation in a project OK!!!!!!!!!!!!!!!
 - Edit Project Info OK!!!!!!!!!!!!
+- Delete Account OK!!!!!!!!!!!!!!!
 
-- Delete Account
 - Delete A Project
 - Delete An Employee From the User Account: desde que não esteja cadastrado em nenhum projeto
-- Delete An Employee From A Project
+- Delete A Collaborator
 
 ## 💻Technologies
 - TypeScript

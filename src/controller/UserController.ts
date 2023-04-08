@@ -48,4 +48,15 @@ export class UserController {
             res.status(error.statusCode || 400).send(error.message)
         }
     }
+
+    public deleteAccount = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const token = req.headers.authorization as string
+            await this.userBusiness.deleteAccount(token)
+            res.status(201).send("Success! The account has been deleted.")
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
 }
