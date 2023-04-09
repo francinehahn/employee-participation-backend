@@ -23,3 +23,8 @@ export interface inputGetAllEmployeesDTO {
     search: string,
     token: string
 }
+
+export interface inputDeleteEmployeeDTO {
+    employeeName: string,
+    token: string
+}

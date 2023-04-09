@@ -25,4 +25,16 @@ export class EmployeeDatabase implements EmployeeRepository {
             throw new CustomError(error.statusCode, error.message)
         }
     }
+
+    public deleteEmployee = async (id: string, employeeName: string): Promise<void> => {
+        try {
+            await UserModel.updateOne(
+                {'_id': id},
+                {$pull: {employees: {employee_name: employeeName}}}
+            )
+
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
 }
