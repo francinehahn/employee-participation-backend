@@ -6,10 +6,11 @@ This is an API REST that allows employers to register the participation rate of 
 ## 🔗Deploy
 
 ## 🔗Documentation
+https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 
 ## ☑️Requests
-- Signup OK
-- Login OK
+- Signup
+- Login
 - Get Account Info
 - Get All Employees
 - Get All Projects
