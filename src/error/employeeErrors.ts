@@ -41,3 +41,9 @@ export class InvalidSearchTerm extends CustomError {
         super(422, "The search term must be either active or inactive.")
     }
 }
+
+export class UnableToDeleteEmployee extends CustomError {
+    constructor () {
+        super(422, "You cannot delete an employee who is a collaborator in a project.")
+    }
+}
