@@ -18,4 +18,3 @@ projectRouter.patch("/add-collaborator", (req, res) => projectController.assignC
 projectRouter.patch("/edit-collaborator", (req, res) => projectController.editCollaboratorParticipation(req, res))
 projectRouter.patch("/delete-collaborator", (req, res) => projectController.deleteCollaborator(req, res))
 projectRouter.patch("/", (req, res) => projectController.deleteProject(req, res))
-projectRouter.get("/", (req, res) => projectController.getAllProjects(req, res))

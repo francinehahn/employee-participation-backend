@@ -14,7 +14,6 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - Login
 - Get Account Info
 - Get All Employees
-- Get All Projects
 - Register an Employee
 - Register a Project
 - Add Employee to a Project
