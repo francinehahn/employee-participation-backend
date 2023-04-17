@@ -6,7 +6,6 @@ import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputGetAllEmployeesD
 import { IAuthenticator } from "../model/IAuthenticator"
 import { Project, collaborator } from "../model/Project"
 import { EmployeeRepository } from "../model/repositories/EmployeeRepository"
-import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
 
 
