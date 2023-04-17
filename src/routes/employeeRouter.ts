@@ -11,7 +11,7 @@ export const employeeRouter = express.Router()
 const projectDatabase = new ProjectDatabase()
 const userDatabase = new UserDatabase()
 const employeeDatabase = new EmployeeDatabase()
-const employeeBusiness = new EmployeeBusiness(employeeDatabase, userDatabase, projectDatabase, new Authenticator())
+const employeeBusiness = new EmployeeBusiness(employeeDatabase, userDatabase, new Authenticator())
 const employeeController = new EmployeeController(employeeBusiness)
 
 employeeRouter.patch("/register", (req, res) => employeeController.registerEmployee(req, res))

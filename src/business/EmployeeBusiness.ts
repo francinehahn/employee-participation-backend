@@ -14,7 +14,6 @@ export class EmployeeBusiness {
     constructor (
         private employeeDatabase: EmployeeRepository,
         private userDatabase: UserRepository,
-        private projectDatabase: ProjectRepository,
         private authenticator: IAuthenticator
     ) {}
 
@@ -97,8 +96,8 @@ export class EmployeeBusiness {
                 throw new EmployeeNotFound()
             }
 
-            const allProjects = await this.projectDatabase.getAllProjects(id)
-            allProjects.forEach((project: Project) => {
+            const userInfo = await this.userDatabase.getUserById(id)
+            userInfo!.projects.forEach((project: Project) => {
                 const findEmployee = project.collaborators.filter((collaborator: collaborator) => collaborator.employee_name === input.employeeName)
                 if (findEmployee.length > 0) {
                     throw new UnableToDeleteEmployee()
