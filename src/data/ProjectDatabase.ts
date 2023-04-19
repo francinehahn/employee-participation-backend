@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError"
-import { Project, addCollaboratorDTO, deleteCollaboratorDTO, deleteProjectDTO, updateParticipationDTO } from "../model/Project"
+import { Project, addCollaboratorDTO, deleteCollaboratorDTO, deleteProjectDTO } from "../model/Project"
 import { UserModel } from "../model/UserModel"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 
