@@ -42,7 +42,7 @@ export class EmployeeController {
     public getEmployeeInfo = async (req: Request, res: Response): Promise<void> => {
         try {
             const input: inputGetEmployeeInfoDTO = {
-                employeeName: req.body.employeeName,
+                employeeName: req.params.employeeName,
                 token: req.headers.authorization as string
             }
 
