@@ -28,3 +28,15 @@ export interface inputDeleteEmployeeDTO {
     employeeName: string,
     token: string
 }
+
+export interface inputGetEmployeeInfoDTO {
+    employeeName: string,
+    token: string
+}
+
+export interface outputGetEmployeeInfoDTO {
+    project_name: string,
+    start_date: string,
+    end_date: string,
+    participation: number
+}

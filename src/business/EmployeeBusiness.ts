@@ -1,8 +1,8 @@
 import { CustomError } from "../error/CustomError"
-import { DuplicateEmployee, InvalidEmployeeName, InvalidSearchTerm, InvalidStatus, MissingEmployeeName, MissingStatus, NoEmployeeRegistered, UnableToDeleteEmployee } from "../error/employeeErrors"
+import { DuplicateEmployee, InvalidEmployeeName, InvalidSearchTerm, InvalidStatus, MissingEmployeeName, MissingStatus, NoCollaborationsFound, NoEmployeeRegistered, UnableToDeleteEmployee } from "../error/employeeErrors"
 import { EmployeeNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
-import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputRegisterEmployeeDTO } from "../model/Employee"
+import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO, outputGetEmployeeInfoDTO } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
 import { Project, collaborator } from "../model/Project"
 import { EmployeeRepository } from "../model/repositories/EmployeeRepository"
@@ -70,6 +70,50 @@ export class EmployeeBusiness {
             }
 
             return result
+
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public getEmployeeInfo = async (input: inputGetEmployeeInfoDTO): Promise<outputGetEmployeeInfoDTO[]> => {
+        try {
+            if (!input.token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(input.token)
+
+            if (!input.employeeName) {
+                throw new MissingEmployeeName()
+            }
+
+            const allEmployees = await this.employeeDatabase.getAllEmployees(id, "")
+            const employeeExists = allEmployees.filter(item => item.employee_name === input.employeeName)
+            if (employeeExists.length === 0) {
+                throw new EmployeeNotFound()
+            }
+
+            const user = await this.userDatabase.getUserById(id)
+            let projectsEmployeeParticipated: outputGetEmployeeInfoDTO[] = []
+
+            user!.projects.forEach(project => {
+                const isAcollaborator = project.collaborators.filter(employee => employee.employee_name === input.employeeName)
+                if (isAcollaborator.length > 0) {
+                    projectsEmployeeParticipated.push({
+                        project_name: project.project_name,
+                        start_date: project.start_date,
+                        end_date: project.end_date,
+                        participation: isAcollaborator[0].participation
+                    })
+                }
+            })
+
+            if (projectsEmployeeParticipated!.length === 0) {
+                throw new NoCollaborationsFound()
+            }
+
+            return projectsEmployeeParticipated!
 
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)

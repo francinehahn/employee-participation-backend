@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { EmployeeBusiness } from "../business/EmployeeBusiness"
-import { inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputRegisterEmployeeDTO } from "../model/Employee"
+import { inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO } from "../model/Employee"
 
 
 export class EmployeeController {
@@ -32,6 +32,21 @@ export class EmployeeController {
             }
 
             const result = await this.employeeBusiness.getAllEmployees(input)
+            res.status(200).send(result)
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public getEmployeeInfo = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const input: inputGetEmployeeInfoDTO = {
+                employeeName: req.body.employeeName,
+                token: req.headers.authorization as string
+            }
+
+            const result = await this.employeeBusiness.getEmployeeInfo(input)
             res.status(200).send(result)
 
         } catch (error: any) {

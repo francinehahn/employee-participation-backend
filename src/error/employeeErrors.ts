@@ -47,3 +47,9 @@ export class UnableToDeleteEmployee extends CustomError {
         super(422, "You cannot delete an employee who is a collaborator in a project.")
     }
 }
+
+export class NoCollaborationsFound extends CustomError {
+    constructor () {
+        super(404, "The employee has not collaborated in any projects yet.")
+    }
+}
