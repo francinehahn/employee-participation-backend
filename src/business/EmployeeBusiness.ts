@@ -88,6 +88,8 @@ export class EmployeeBusiness {
                 throw new MissingEmployeeName()
             }
 
+            input.employeeName = input.employeeName.replace("-", " ")
+
             const allEmployees = await this.employeeDatabase.getAllEmployees(id, "")
             const employeeExists = allEmployees.filter(item => item.employee_name === input.employeeName)
             if (employeeExists.length === 0) {
