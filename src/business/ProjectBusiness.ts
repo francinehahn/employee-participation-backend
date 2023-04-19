@@ -1,10 +1,10 @@
 import { CustomError } from "../error/CustomError"
-import { MissingEmployeeName } from "../error/employeeErrors"
+import { MissingEmployeeName, NoEmployeeRegistered } from "../error/employeeErrors"
 import { CollaboratorNotFound, DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingCollaborator, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
-import { collaborator, deleteCollaboratorDTO, deleteProjectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, updateParticipationDTO } from "../model/Project"
+import { collaborator, deleteCollaboratorDTO, deleteProjectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, outputGetAverageParticipationDTO, updateParticipationDTO } from "../model/Project"
 import { Project, addCollaboratorDTO, inputAddEmployeeToAprojectDTO, inputRegisterProjectDTO } from "../model/Project"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
@@ -194,6 +194,43 @@ export class ProjectBusiness {
 
             await this.projectDatabase.deleteCollaborator(pull)
             await this.projectDatabase.assignCollaboratorToAproject(push)
+            
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public getAverageParticipation = async (token: string): Promise<outputGetAverageParticipationDTO[]> => {
+        try {
+            if (!token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(token)
+
+            const user = await this.userDatabase.getUserById(id)
+            
+            const result: outputGetAverageParticipationDTO[] = []
+            user!.employees.forEach(employee => {
+                let sum = 0
+                let n = 0
+
+                user!.projects.forEach(project => {
+                    const filter = project.collaborators.filter(collaborator => collaborator.employee_name === employee.employee_name)
+                    if (filter.length > 0) {
+                        sum += filter[0].participation
+                        n += 1
+                    }
+                })
+
+                result.push({employee_name: employee.employee_name, avg_participation: Number((sum / n).toFixed(1))})
+            })
+
+            if (result.length === 0) {
+                throw new NoEmployeeRegistered()
+            }
+            
+            return result
             
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)

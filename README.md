@@ -15,6 +15,7 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - Get Account Info
 - Get All Employees
 - Get Employee Info
+- Get Average Participation
 - Register an Employee
 - Register a Project
 - Add Employee to a Project

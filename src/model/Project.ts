@@ -81,3 +81,8 @@ export interface deleteCollaboratorDTO {
     projectName: string,
     collaborator: string
 }
+
+export interface outputGetAverageParticipationDTO {
+    employee_name: string,
+    avg_participation: number
+}
