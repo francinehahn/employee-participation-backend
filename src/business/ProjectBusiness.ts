@@ -113,7 +113,7 @@ export class ProjectBusiness {
                     sum += collaborator.participation
                 })
 
-                if (sum > 100) {
+                if (sum + input.participation > 100) {
                     throw new ParticipationRateExceeded()
                 }
             }
