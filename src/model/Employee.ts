@@ -40,3 +40,14 @@ export interface outputGetEmployeeInfoDTO {
     end_date: string,
     participation: number
 }
+
+export interface inputEditEmployeeDTO {
+    employeeName: string,
+    newStatus: employeeStatus,
+    token: string
+}
+
+export interface updateEmployeeDbDTO {
+    employeeName: string,
+    status: employeeStatus
+}

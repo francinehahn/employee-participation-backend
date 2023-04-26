@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { EmployeeBusiness } from "../business/EmployeeBusiness"
-import { inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO } from "../model/Employee"
+import { inputDeleteEmployeeDTO, inputEditEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO } from "../model/Employee"
 
 
 export class EmployeeController {
@@ -18,6 +18,22 @@ export class EmployeeController {
 
             await this.employeeBusiness.registerEmployee(input)
             res.status(201).send("Success! The employee has been registered!")
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public editEmployeeStatus = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const input: inputEditEmployeeDTO = {
+                employeeName: req.body.employeeName,
+                newStatus: req.body.newStatus,
+                token: req.headers.authorization as string
+            }
+
+            await this.employeeBusiness.editEmployeeStatus(input)
+            res.status(201).send("Success! The employee participation has been updated!")
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)
