@@ -14,7 +14,11 @@ export class UserDatabaseMock implements UserRepository {
             password: "12345678"
         }
 
-        return result  
+        if (email === result.email) {
+            return result
+        } else {
+            return null
+        }
     }
 
     public getUserById = async (id: string): Promise<outputUserInfoDTO | null> => {
