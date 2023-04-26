@@ -19,6 +19,7 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - Register an Employee
 - Register a Project
 - Add Employee to a Project
+- Edit Employee Status
 - Edit Employee participation in a project
 - Edit Project Info
 - Delete Account
@@ -34,7 +35,7 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - MongoDB
 - Jest.js
 
-## 🛰Running the project
+## 🛰 Running the project
 <pre>
   <code>git clone https://github.com/francinehahn/employee-participation-backend.git</code>
 </pre>
