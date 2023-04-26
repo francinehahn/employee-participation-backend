@@ -23,7 +23,7 @@ export class UserBusiness {
             if (!input.password) {
                 throw new MissingPassword()
             }
-            if (input.userName.length < 10 || !input.userName.includes(" ")) {
+            if (input.userName.length < 7 || !input.userName.includes(" ")) {
                 throw new InvalidUserName()
             }
             if (!input.email.includes("@")) {
