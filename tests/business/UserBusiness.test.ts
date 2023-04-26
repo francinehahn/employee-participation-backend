@@ -170,7 +170,7 @@ describe("Testing the getAccountInfo endpoint", () => {
 
     test("Should receive a valid token and then return the result", async () => {
         const result = await userBusiness.getAccountInfo("token")
-        expect(result).toEqual({"_id": "6431b333f7dc32460cb09429", "email": "fran_hahn@hotmail.com", "employees": [{"employee_name": "Tábata Santos", "status": "inactive"}, {"employee_name": "João Pedro Saraiva", "status": "active"}], "projects": [{"collaborators": [{"employee_name": "Maria Fontoura", "participation": 20}, {"employee_name": "Breno Fuchs", "participation": 18}, {"employee_name": "Ana Castro", "participation": 17}], "end_date": "03/04/2023", "project_name": "Labefood", "start_date": "10/12/2022"}], "user_name": "Francine Hahn"})
+        expect(result).toEqual({"_id": "6431b333f7dc32460cb09429", "email": "fran_hahn@hotmail.com", "employees": [{"employee_name": "Tábata Santos", "status": "inactive"}, {"employee_name": "João Pedro Saraiva", "status": "active"}], "projects": [{"collaborators": [{"employee_name": "Tábata Santos", "participation": 20}], "end_date": "03/04/2023", "project_name": "Labefood", "start_date": "10/12/2022"}], "user_name": "Francine Hahn"})
     })
 })
 

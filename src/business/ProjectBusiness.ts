@@ -53,7 +53,7 @@ export class ProjectBusiness {
             }
 
             const user = await this.userDatabase.getUserById(id)
-
+            
             const findProject = user!.projects.filter((project: Project) => project.project_name === input.projectName)
             if (findProject.length > 0) {
                 throw new DuplicateProject()
@@ -141,7 +141,7 @@ export class ProjectBusiness {
             const {id} = await this.authenticator.getTokenData(input.token)
 
             if (!input.projectName) {
-                throw new MissingParticipation()
+                throw new MissingProjectName()
             }
 
             const user = await this.userDatabase.getUserById(id)

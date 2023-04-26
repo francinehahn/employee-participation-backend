@@ -43,16 +43,8 @@ export class UserDatabaseMock implements UserRepository {
                     end_date: "03/04/2023",
                     collaborators: [
                         {
-                            employee_name: "Maria Fontoura",
+                            employee_name: "Tábata Santos",
                             participation: 20
-                        },
-                        {
-                            employee_name: "Breno Fuchs",
-                            participation: 18
-                        },
-                        {
-                            employee_name: "Ana Castro",
-                            participation: 17
                         }
                     ]
                 }
