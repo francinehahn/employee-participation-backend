@@ -2,7 +2,7 @@ import { CustomError } from "../error/CustomError"
 import { DuplicateEmployee, InvalidEmployeeName, InvalidSearchTerm, InvalidStatus, MissingEmployeeName, MissingStatus, NoCollaborationsFound, NoEmployeeRegistered, UnableToDeleteEmployee } from "../error/employeeErrors"
 import { EmployeeNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
-import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO, outputGetEmployeeInfoDTO } from "../model/Employee"
+import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputEditEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO, outputGetEmployeeInfoDTO, updateEmployeeDbDTO } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
 import { Project, collaborator } from "../model/Project"
 import { EmployeeRepository } from "../model/repositories/EmployeeRepository"
@@ -45,6 +45,42 @@ export class EmployeeBusiness {
 
             const newEmployee = new Employee(input.employeeName, input.status)
             await this.employeeDatabase.registerEmployee(id, newEmployee)
+
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public editEmployeeStatus = async (input: inputEditEmployeeDTO): Promise<void> => {
+        try {
+            if (!input.token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(input.token)
+
+            if (!input.employeeName) {
+                throw new MissingEmployeeName()
+            }
+            if (!input.newStatus) {
+                throw new MissingStatus()
+            }
+            if (input.newStatus.toLowerCase() !== employeeStatus.active && input.newStatus.toLowerCase() !== employeeStatus.inactive) {
+                throw new InvalidStatus()
+            }
+
+            const user = await this.userDatabase.getUserById(id)
+            const findEmployee = user!.employees.filter((employee: Employee) => employee.employee_name === input.employeeName)
+            if (findEmployee.length === 0) {
+                throw new EmployeeNotFound()
+            }
+
+            const updateEmployee: updateEmployeeDbDTO = {
+                employeeName: input.employeeName,
+                status: input.newStatus
+            }
+
+            await this.employeeDatabase.editEmployeeStatus(id, updateEmployee)
 
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
