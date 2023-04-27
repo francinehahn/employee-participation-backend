@@ -93,6 +93,6 @@ export class MissingCollaborator extends CustomError {
 
 export class CollaboratorNotFound extends CustomError {
     constructor () {
-        super(404, "This collaborator is not assigned to the provided project.")
+        super(404, "This collaborator has not been assigned to this project.")
     }
 }

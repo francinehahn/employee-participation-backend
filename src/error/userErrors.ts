@@ -20,7 +20,7 @@ export class MissingUserName extends CustomError {
 
 export class InvalidUserName extends CustomError {
     constructor () {
-        super(422, "Provide the first name and the last name of the user with at least 10 characters.")
+        super(422, "Provide the first name and the last name of the user with at least 7 characters.")
     }
 }
 
