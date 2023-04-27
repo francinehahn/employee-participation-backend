@@ -557,13 +557,189 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
 })
 
 
-/*describe("Testing the getAverageParticipation endpoint", () => {}
+describe("Testing the getAverageParticipation endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        try {
+            const token = ""
+            await projectBusiness.getAverageParticipation(token)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        try {
+            const token = "invalidToken"
+            await projectBusiness.getAverageParticipation(token)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should receive a valid token and not return a custom error", async () => {
+        const token = "token"
+        const result = await projectBusiness.getAverageParticipation(token)
+        expect(result).toBeDefined()
+    })
+})
 
 
-describe("Testing the editProjectInfo endpoint", () => {}
+describe("Testing the editProjectInfo endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "Labefood",
+                newProjectName: "Labefoods",
+                startDate: "",
+                endDate: "",
+                token: ""
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "Labefood",
+                newProjectName: "Labefoods",
+                startDate: "",
+                endDate: "",
+                token: "invalidToken"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should not receive the project name and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "",
+                newProjectName: "Labefoods",
+                startDate: "",
+                endDate: "",
+                token: "token"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the project name.")
+        }
+    })
+
+    test("Should receive an invalid current project name and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "LAMA",
+                newProjectName: "Labefoods",
+                startDate: "",
+                endDate: "",
+                token: "token"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This project has not been registered yet.")
+        }
+    })
+
+    test("Should receive an invalid startDate and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "Labefood",
+                newProjectName: "",
+                startDate: "10-05-2022",
+                endDate: "10/03/2023",
+                token: "token"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Invalid start date.")
+        }
+    })
+
+    test("Should receive an invalid endDate and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "Labefood",
+                newProjectName: "",
+                startDate: "10/05/2022",
+                endDate: "10-03-2023",
+                token: "token"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Invalid end date.")
+        }
+    })
+
+    test("Should receive invalid start and end dates and then return a custom error", async () => {
+        try {
+            const input = {
+                currentProjectName: "Labefood",
+                newProjectName: "",
+                startDate: "10/03/2023",
+                endDate: "10/03/2022",
+                token: "token"
+            }
+
+            await projectBusiness.editProjectInfo(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("The end date of the project cannot be earlier than the start date.")
+        }
+    })
+
+    test("Should receive a valid input and then return a custom error", async () => {
+        const input = {
+            currentProjectName: "Labefood",
+            newProjectName: "",
+            startDate: "10/03/2022",
+            endDate: "10/03/2023",
+            token: "token"
+        }
+
+        const result = await projectBusiness.editProjectInfo(input)
+        expect(result).toBeUndefined()
+    })
+})
 
 
-describe("Testing the deleteProject endpoint", () => {}
+/*describe("Testing the deleteProject endpoint", () => {}
 
 
 describe("Testing the deleteCollaborator endpoint", () => {})*/
