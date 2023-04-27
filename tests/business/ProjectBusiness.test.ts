@@ -400,6 +400,8 @@ describe("Testing the assignCollaboratorToAproject endpoint", () => {
 
 describe("Testing the editCollaboratorParticipation endpoint", () => {
     test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -418,6 +420,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -436,6 +440,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should not receive the project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "",
@@ -454,6 +460,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should receive an invalid project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "LAMA",
@@ -472,6 +480,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should not receive the employee name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -490,6 +500,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should receive an invalid employee name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -508,6 +520,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should not receive the participation rate and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -526,6 +540,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
     })
 
     test("Should receive an invalid participation rate and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 projectName: "Labefood",
@@ -559,6 +575,8 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
 
 describe("Testing the getAverageParticipation endpoint", () => {
     test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const token = ""
             await projectBusiness.getAverageParticipation(token)
@@ -571,6 +589,8 @@ describe("Testing the getAverageParticipation endpoint", () => {
     })
 
     test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const token = "invalidToken"
             await projectBusiness.getAverageParticipation(token)
@@ -592,6 +612,8 @@ describe("Testing the getAverageParticipation endpoint", () => {
 
 describe("Testing the editProjectInfo endpoint", () => {
     test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "Labefood",
@@ -611,6 +633,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "Labefood",
@@ -630,6 +654,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should not receive the project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "",
@@ -649,6 +675,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should receive an invalid current project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "LAMA",
@@ -668,6 +696,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should receive an invalid startDate and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "Labefood",
@@ -687,6 +717,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should receive an invalid endDate and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "Labefood",
@@ -706,6 +738,8 @@ describe("Testing the editProjectInfo endpoint", () => {
     })
 
     test("Should receive invalid start and end dates and then return a custom error", async () => {
+        expect.assertions(3)
+        
         try {
             const input = {
                 currentProjectName: "Labefood",
@@ -739,7 +773,214 @@ describe("Testing the editProjectInfo endpoint", () => {
 })
 
 
-/*describe("Testing the deleteProject endpoint", () => {}
+describe("Testing the deleteProject endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                token: ""
+            }
+
+            await projectBusiness.deleteProject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                token: "invalidToken"
+            }
+
+            await projectBusiness.deleteProject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should not receive the project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "",
+                token: "token"
+            }
+
+            await projectBusiness.deleteProject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the project name.")
+        }
+    })
+
+    test("Should receive an invalid project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "LAMA",
+                token: "token"
+            }
+
+            await projectBusiness.deleteProject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This project has not been registered yet.")
+        }
+    })
+
+    test("Should receive a valid input and not return a custom error", async () => {
+        const input = {
+            projectName: "Labefood",
+            token: "token"
+        }
+
+        const result = await projectBusiness.deleteProject(input)
+        expect(result).toBeUndefined()
+    })
+})
 
 
-describe("Testing the deleteCollaborator endpoint", () => {})*/
+describe("Testing the deleteCollaborator endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                collaborator: "Tábata Santos",
+                token: ""
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                collaborator: "Tábata Santos",
+                token: "invalidToken"
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should not receive the project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "",
+                collaborator: "Tábata Santos",
+                token: "token"
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the project name.")
+        }
+    })
+
+    test("Should receive an invalid project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "LAMA",
+                collaborator: "Tábata Santos",
+                token: "token"
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This project has not been registered yet.")
+        }
+    })
+
+    test("Should not receive the collaborator and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                collaborator: "",
+                token: "token"
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the collaborator's full name.")
+        }
+    })
+
+    test("Should receive an invalid collaborator name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labefood",
+                collaborator: "Tábata Ribeiro",
+                token: "token"
+            }
+
+            await projectBusiness.deleteCollaborator(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This collaborator has not been assigned to this project.")
+        }
+    })
+
+    test("Should receive a valid input and not return a custom error", async () => {
+        const input = {
+            projectName: "Labefood",
+            collaborator: "Tábata Santos",
+            token: "token"
+        }
+
+        const result = await projectBusiness.deleteCollaborator(input)
+        expect(result).toBeUndefined()
+    })
+})
