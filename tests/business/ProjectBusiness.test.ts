@@ -270,7 +270,7 @@ describe("Testing the assignCollaboratorToAproject endpoint", () => {
         }
     })
 
-    test("Should receive an invalid project name and then return a custom error", async () => {
+    test("Should receive a project name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
 
         try {
@@ -308,7 +308,7 @@ describe("Testing the assignCollaboratorToAproject endpoint", () => {
         }
     })
 
-    test("Should receive an invalid employee name and then return a custom error", async () => {
+    test("Should receive an employee name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
 
         try {
@@ -459,7 +459,7 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
         }
     })
 
-    test("Should receive an invalid project name and then return a custom error", async () => {
+    test("Should receive a project name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -499,7 +499,7 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
         }
     })
 
-    test("Should receive an invalid employee name and then return a custom error", async () => {
+    test("Should receive an employee who is not a collaborator in the project and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -674,7 +674,7 @@ describe("Testing the editProjectInfo endpoint", () => {
         }
     })
 
-    test("Should receive an invalid current project name and then return a custom error", async () => {
+    test("Should receive a current project name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -737,7 +737,7 @@ describe("Testing the editProjectInfo endpoint", () => {
         }
     })
 
-    test("Should receive invalid start and end dates and then return a custom error", async () => {
+    test("Should receive an invalid start and end dates and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -828,7 +828,7 @@ describe("Testing the deleteProject endpoint", () => {
         }
     })
 
-    test("Should receive an invalid project name and then return a custom error", async () => {
+    test("Should receive a project name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -916,7 +916,7 @@ describe("Testing the deleteCollaborator endpoint", () => {
         }
     })
 
-    test("Should receive an invalid project name and then return a custom error", async () => {
+    test("Should receive a project name that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
         
         try {
@@ -954,7 +954,7 @@ describe("Testing the deleteCollaborator endpoint", () => {
         }
     })
 
-    test("Should receive an invalid collaborator name and then return a custom error", async () => {
+    test("Should receive a collaborator that does not exist in the db and then return a custom error", async () => {
         expect.assertions(3)
         
         try {

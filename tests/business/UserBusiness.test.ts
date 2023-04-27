@@ -156,6 +156,18 @@ describe("Testing the login endpoint", () => {
 
 
 describe("Testing the getAccountInfo endpoint", () => {
+    test("Should not receive a token and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            await userBusiness.getAccountInfo("")
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
     test("Should receive an invalid token and then return a custom error", async () => {
         expect.assertions(3)
 
@@ -176,6 +188,18 @@ describe("Testing the getAccountInfo endpoint", () => {
 
 
 describe("Testing the deleteAccount endpoint", () => {
+    test("Should not receive a token and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            await userBusiness.deleteAccount("")
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+    
     test("Should receive an invalid token and then return a custom error", async () => {
         expect.assertions(3)
 
