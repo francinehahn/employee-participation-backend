@@ -198,11 +198,86 @@ describe("Testing the editEmployeeStatus endpoint", () => {
 })
 
 
-/*describe("Testing the getAllEmployees endpoint", () => {})
+describe("Testing the getEmployeeInfo endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Tábata Santos",
+                token: ""
+            }
+
+            await employeeBusiness.getEmployeeInfo(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Tábata Santos",
+                token: "invalidToken"
+            }
+
+            await employeeBusiness.getEmployeeInfo(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should not receive the employee name and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "",
+                token: "token"
+            }
+
+            await employeeBusiness.getEmployeeInfo(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the employee's full name.")
+        }
+    })
+
+    test("Should receive an employee name that does not exist in the db and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Rogério Vilela",
+                token: "token"
+            }
+
+            await employeeBusiness.getEmployeeInfo(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This employee has not been registered yet.")
+        }
+    })
+
+    test("Should receive a valid input and not return a custom error", async () => {
+        const input = {
+            employeeName: "Tábata Santos",
+            token: "token"
+        }
+
+        const result = await employeeBusiness.getEmployeeInfo(input)
+        expect(result).toEqual([{"end_date": "03/04/2023", "participation": 20, "project_name": "Labefood", "start_date": "10/12/2022"}])
+    })
+})
 
 
-describe("Testing the getEmployeeInfo endpoint", () => {})
-
-
-describe("Testing the deleteEmployee endpoint", () => {})
+/*describe("Testing the deleteEmployee endpoint", () => {})
 */

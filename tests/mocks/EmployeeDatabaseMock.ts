@@ -10,27 +10,11 @@ export class EmployeeDatabaseMock implements EmployeeRepository {
     public getAllEmployees = async (id: string, search: string): Promise<Employee[] | []> => {
         const employees: Employee[] = [
             {
-                employee_name: "Ana Castro",
-                status: employeeStatus.active
-            },
-            {
-                employee_name: "Maria Fontoura",
-                status: employeeStatus.active
-            },
-            {
-                employee_name: "Breno Fuchs",
+                employee_name: "Tábata Santos",
                 status: employeeStatus.inactive
             },
             {
-                employee_name: "Lauren Tivolli",
-                status: employeeStatus.active
-            },
-            {
-                employee_name: "Glenda Huston",
-                status: employeeStatus.inactive
-            },
-            {
-                employee_name: "Clara Maria Justus",
+                employee_name: "João Pedro Saraiva",
                 status: employeeStatus.active
             }
         ]
