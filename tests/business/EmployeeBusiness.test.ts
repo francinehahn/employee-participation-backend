@@ -279,5 +279,65 @@ describe("Testing the getEmployeeInfo endpoint", () => {
 })
 
 
-/*describe("Testing the deleteEmployee endpoint", () => {})
-*/
+describe("Testing the deleteEmployee endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Tábata Santos",
+                token: ""
+            }
+
+            await employeeBusiness.deleteEmployee(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an employee name that does not exist in the db and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Tábata Amaral",
+                token: "token"
+            }
+
+            await employeeBusiness.deleteEmployee(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This employee has not been registered yet.")
+        }
+    })
+    
+    test("Should receive an employee who is a collaborator in a project and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Tábata Santos",
+                token: "token"
+            }
+
+            await employeeBusiness.deleteEmployee(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("You cannot delete an employee who is a collaborator in a project.")
+        }
+    })
+
+    test("Should receive a valid input and not return a custom error", async () => {
+        const input = {
+            employeeName: "João Pedro Saraiva",
+            token: "token"
+        }
+
+        const result = await employeeBusiness.deleteEmployee(input)
+        expect(result).toBeUndefined()
+    })
+})
