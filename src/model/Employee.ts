@@ -48,6 +48,6 @@ export interface inputEditEmployeeDTO {
 }
 
 export interface updateEmployeeDbDTO {
-    employeeName: string,
+    employee_name: string,
     status: employeeStatus
 }

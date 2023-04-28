@@ -16,7 +16,7 @@ export class EmployeeDatabase implements EmployeeRepository {
     public editEmployeeStatus = async (id: string, updateEmployee: updateEmployeeDbDTO): Promise<void> => {
         try {
             await UserModel.updateOne(
-                {_id: id, 'employees.employee_name': updateEmployee.employeeName},
+                {_id: id, 'employees.employee_name': updateEmployee.employee_name},
                 {$set: {'employees.$': updateEmployee}}
             )
         } catch (error: any) {

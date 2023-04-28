@@ -76,7 +76,7 @@ export class EmployeeBusiness {
             }
 
             const updateEmployee: updateEmployeeDbDTO = {
-                employeeName: input.employeeName,
+                employee_name: input.employeeName,
                 status: input.newStatus
             }
 
