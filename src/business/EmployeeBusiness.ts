@@ -151,7 +151,19 @@ export class EmployeeBusiness {
                 throw new NoCollaborationsFound()
             }
 
-            return projectsEmployeeParticipated!
+            return projectsEmployeeParticipated!.sort((a, b) => {
+                const valueOfA = new Date(a.end_date.split("/").reverse().join(",")).valueOf()
+                const valueOfB = new Date(b.end_date.split("/").reverse().join(",")).valueOf()
+                
+                if (valueOfA > valueOfB) {
+                  return 1
+                }
+                if (valueOfA < valueOfB) {
+                  return -1
+                }
+                
+                return 0
+            })
 
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
