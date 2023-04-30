@@ -250,12 +250,29 @@ describe("Testing the getEmployeeInfo endpoint", () => {
         }
     })
 
-    test("Should receive an employee name that does not exist in the db and then return a custom error", async () => {
+    test("Should receive an invalid employee name and then return a custom error", async () => {
         expect.assertions(3)
 
         try {
             const input = {
                 employeeName: "Rogério Vilela",
+                token: "token"
+            }
+
+            await employeeBusiness.getEmployeeInfo(input)
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("The employee name must not contain any spaces (all spaces must be replaced by '-'). Example: Maria-Santos")
+        }
+    })
+
+    test("Should receive an employee name that does not exist in the db and then return a custom error", async () => {
+        expect.assertions(3)
+
+        try {
+            const input = {
+                employeeName: "Rogério-Vilela",
                 token: "token"
             }
 
@@ -269,7 +286,7 @@ describe("Testing the getEmployeeInfo endpoint", () => {
 
     test("Should receive a valid input and not return a custom error", async () => {
         const input = {
-            employeeName: "Tábata Santos",
+            employeeName: "Tábata-Santos",
             token: "token"
         }
 

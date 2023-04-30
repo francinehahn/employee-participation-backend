@@ -9,7 +9,13 @@ export class MissingProjectName extends CustomError {
 
 export class InvalidProjectName extends CustomError {
     constructor () {
-        super(422, "The project name must have at least 3 characters and must not contain any spaces (all spaces must be replaced by '-'). Example: labenu-music-awards")
+        super(422, "The project name must have at least 3 characters.")
+    }
+}
+
+export class InvalidSpaces extends CustomError {
+    constructor () {
+        super(422, "The project name must not contain any spaces (all spaces must be replaced by '-'). Example: labenu-music-awards")
     }
 }
 

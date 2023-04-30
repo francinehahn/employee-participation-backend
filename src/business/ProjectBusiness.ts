@@ -1,6 +1,6 @@
 import { CustomError } from "../error/CustomError"
 import { MissingEmployeeName, NoEmployeeRegistered } from "../error/employeeErrors"
-import { CollaboratorNotFound, DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidStartDate, MissingCollaborator, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
+import { CollaboratorNotFound, DuplicateCollaborator, DuplicateProject, EmployeeNotFound, InvalidDates, InvalidEndDate, InvalidParticipation, InvalidProjectName, InvalidSpaces, InvalidStartDate, MissingCollaborator, MissingEndDate, MissingParticipation, MissingProjectName, MissingStartDate, ParticipationRateExceeded, ProjectNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
@@ -213,7 +213,7 @@ export class ProjectBusiness {
             }
 
             if (input.projectName.includes(" ")) {
-                throw new InvalidProjectName()
+                throw new InvalidSpaces()
             }
 
             const user = await this.userDatabase.getUserById(id)

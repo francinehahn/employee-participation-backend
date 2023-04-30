@@ -12,6 +12,12 @@ export class InvalidEmployeeName extends CustomError {
     }
 }
 
+export class InvalidSpacesEmployeeName extends CustomError {
+    constructor () {
+        super(422, "The employee name must not contain any spaces (all spaces must be replaced by '-'). Example: Maria-Santos")
+    }
+}
+
 export class MissingStatus extends CustomError {
     constructor () {
         super(422, "Provide the employee status.")
