@@ -59,11 +59,11 @@ export class ProjectController {
         }
     }
 
-    public getAverageParticipation = async (req: Request, res: Response): Promise<void> => {
+    public getAvgParticipationOfEachEmployee = async (req: Request, res: Response): Promise<void> => {
         try {
             const token = req.headers.authorization as string
 
-            const result = await this.projectBusiness.getAverageParticipation(token)
+            const result = await this.projectBusiness.getAvgParticipationOfEachEmployee(token)
             res.status(200).send(result)
 
         } catch (error: any) {

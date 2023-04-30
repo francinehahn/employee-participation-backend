@@ -579,7 +579,7 @@ describe("Testing the getAverageParticipation endpoint", () => {
         
         try {
             const token = ""
-            await projectBusiness.getAverageParticipation(token)
+            await projectBusiness.getAvgParticipationOfEachEmployee(token)
 
         } catch (error: any) {
             expect(error).toBeInstanceOf(CustomError)
@@ -593,7 +593,7 @@ describe("Testing the getAverageParticipation endpoint", () => {
         
         try {
             const token = "invalidToken"
-            await projectBusiness.getAverageParticipation(token)
+            await projectBusiness.getAvgParticipationOfEachEmployee(token)
 
         } catch (error: any) {
             expect(error).toBeInstanceOf(CustomError)
@@ -604,7 +604,7 @@ describe("Testing the getAverageParticipation endpoint", () => {
 
     test("Should receive a valid token and not return a custom error", async () => {
         const token = "token"
-        const result = await projectBusiness.getAverageParticipation(token)
+        const result = await projectBusiness.getAvgParticipationOfEachEmployee(token)
         expect(result).toBeDefined()
     })
 })
