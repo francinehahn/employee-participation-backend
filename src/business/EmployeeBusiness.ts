@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError"
-import { DuplicateEmployee, InvalidEmployeeName, InvalidSearchTerm, InvalidStatus, MissingEmployeeName, MissingStatus, NoCollaborationsFound, NoEmployeeRegistered, UnableToDeleteEmployee } from "../error/employeeErrors"
+import { DuplicateEmployee, InvalidEmployeeName, InvalidSearchTerm, InvalidSpacesEmployeeName, InvalidStatus, MissingEmployeeName, MissingStatus, NoCollaborationsFound, NoEmployeeRegistered, UnableToDeleteEmployee } from "../error/employeeErrors"
 import { EmployeeNotFound } from "../error/projectErrors"
 import { MissingToken } from "../error/userErrors"
 import { Employee, employeeStatus, inputDeleteEmployeeDTO, inputEditEmployeeDTO, inputGetAllEmployeesDTO, inputGetEmployeeInfoDTO, inputRegisterEmployeeDTO, outputGetEmployeeInfoDTO, updateEmployeeDbDTO } from "../model/Employee"
@@ -124,7 +124,11 @@ export class EmployeeBusiness {
                 throw new MissingEmployeeName()
             }
 
-            input.employeeName = input.employeeName.replace("-", " ")
+            if (input.employeeName.includes(" ")) {
+                throw new InvalidSpacesEmployeeName()
+            }
+
+            input.employeeName = input.employeeName.replaceAll("-", " ")
 
             const allEmployees = await this.employeeDatabase.getAllEmployees(id, "")
             const employeeExists = allEmployees.filter(item => item.employee_name === input.employeeName)

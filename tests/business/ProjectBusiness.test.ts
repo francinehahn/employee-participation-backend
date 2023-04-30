@@ -573,7 +573,7 @@ describe("Testing the editCollaboratorParticipation endpoint", () => {
 })
 
 
-describe("Testing the getAverageParticipation endpoint", () => {
+describe("Testing the getAvgParticipationOfEachEmployee endpoint", () => {
     test("Should not receive the token and then return a custom error", async () => {
         expect.assertions(3)
         
@@ -606,6 +606,104 @@ describe("Testing the getAverageParticipation endpoint", () => {
         const token = "token"
         const result = await projectBusiness.getAvgParticipationOfEachEmployee(token)
         expect(result).toBeDefined()
+    })
+})
+
+
+describe("Testing the getAvgParticipationInAproject endpoint", () => {
+    test("Should not receive the token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Cookenu",
+                token: ""
+            }
+            await projectBusiness.getAvgParticipationInAproject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the token.")
+        }
+    })
+
+    test("Should receive an invalid token and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Cookenu",
+                token: "invalidToken"
+            }
+            await projectBusiness.getAvgParticipationInAproject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(401)
+            expect(error.message).toBe("Unauthorized user.")
+        }
+    })
+
+    test("Should not receive the project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "",
+                token: "token"
+            }
+            await projectBusiness.getAvgParticipationInAproject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("Provide the project name.")
+        }
+    })
+
+    test("Should receive an invalid project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Labenu Music Awards",
+                token: "token"
+            }
+            await projectBusiness.getAvgParticipationInAproject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(422)
+            expect(error.message).toBe("The project name must not contain any spaces (all spaces must be replaced by '-'). Example: labenu-music-awards")
+        }
+    })
+
+    test("Should receive an inexistent project name and then return a custom error", async () => {
+        expect.assertions(3)
+        
+        try {
+            const input = {
+                projectName: "Cookenu",
+                token: "token"
+            }
+            await projectBusiness.getAvgParticipationInAproject(input)
+
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(CustomError)
+            expect(error.statusCode).toBe(404)
+            expect(error.message).toBe("This project has not been registered yet.")
+        }
+    })
+
+    test("Should receive a valid input and not return a custom error", async () => {
+        const input = {
+            projectName: "Labefood",
+            token: "token"
+        }
+
+        const result = await projectBusiness.getAvgParticipationInAproject(input)
+        expect(result).toEqual({project_name: "Labefood", avg_participation: 20})
     })
 })
 

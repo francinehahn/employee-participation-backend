@@ -15,17 +15,18 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - Get Account Info
 - Get All Employees
 - Get Employee Info
-- Get Average Participation
-- Register an Employee
-- Register a Project
-- Add Employee to a Project
+- Get Average Participation Of Each Employee
+- Get Average Participation In A Project
+- Register An Employee
+- Register A Project
+- Add Employee To A Project
 - Edit Employee Status
-- Edit Employee participation in a project
+- Edit Employee Participation In A Project
 - Edit Project Info
 - Delete Account
 - Delete A Project
-- Delete A Collaborator
-- Delete An Employee From the User Account
+- Delete A Collaborator From A Project
+- Delete An Employee From The User Account
 
 ## 💻Technologies
 - TypeScript

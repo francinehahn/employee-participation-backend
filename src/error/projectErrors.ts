@@ -13,6 +13,12 @@ export class InvalidProjectName extends CustomError {
     }
 }
 
+export class InvalidSpaces extends CustomError {
+    constructor () {
+        super(422, "The project name must not contain any spaces (all spaces must be replaced by '-'). Example: labenu-music-awards")
+    }
+}
+
 export class ProjectNotFound extends CustomError {
     constructor () {
         super(404, "This project has not been registered yet.")
