@@ -200,7 +200,7 @@ export class ProjectBusiness {
         }
     }
 
-    public getAverageParticipation = async (token: string): Promise<outputGetAverageParticipationDTO[]> => {
+    public getAvgParticipationOfEachEmployee = async (token: string): Promise<outputGetAverageParticipationDTO[]> => {
         try {
             if (!token) {
                 throw new MissingToken()
@@ -223,14 +223,18 @@ export class ProjectBusiness {
                     }
                 })
 
-                result.push({employee_name: employee.employee_name, avg_participation: Number((sum / n).toFixed(1))})
+                if (sum === 0) {
+                    result.push({employee_name: employee.employee_name, avg_participation: 0})    
+                } else {
+                    result.push({employee_name: employee.employee_name, avg_participation: Number((sum / n).toFixed(1))})
+                }
             })
 
             if (result.length === 0) {
                 throw new NoEmployeeRegistered()
             }
             
-            return result
+            return result.sort((a, b) => a.avg_participation > b.avg_participation? -1 : 1)
             
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
