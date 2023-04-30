@@ -1,6 +1,6 @@
 import { ProjectBusiness } from "../business/ProjectBusiness"
 import { Request, Response } from "express"
-import { inputAddEmployeeToAprojectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO } from "../model/Project"
+import { inputAddEmployeeToAprojectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputRegisterProjectDTO, inputGetAvgParticipationInAprojectDTO} from "../model/Project"
 
 
 export class ProjectController {
@@ -53,6 +53,21 @@ export class ProjectController {
 
             await this.projectBusiness.editCollaboratorParticipation(input)
             res.status(201).send("Success! The employee participation has been updated.")
+
+        } catch (error: any) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public getAvgParticipationInAproject = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const input: inputGetAvgParticipationInAprojectDTO = {
+                projectName: req.params.projectName,
+                token: req.headers.authorization as string
+            }
+
+            const result = await this.projectBusiness.getAvgParticipationInAproject(input)
+            res.status(200).send(result)
 
         } catch (error: any) {
             res.status(error.statusCode || 400).send(error.message)

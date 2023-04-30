@@ -13,6 +13,7 @@ const projectBusiness = new ProjectBusiness(projectDatabase, userDatabase, new A
 const projectController = new ProjectController(projectBusiness)
 
 projectRouter.get("/avg-participation", (req, res) => projectController.getAvgParticipationOfEachEmployee(req, res))
+projectRouter.get("/:projectName/avg-participation", (req, res) => projectController.getAvgParticipationInAproject(req, res))
 projectRouter.patch("/register", (req, res) => projectController.registerProject(req, res))
 projectRouter.patch("/edit", (req, res) => projectController.editProjectInfo(req, res))
 projectRouter.patch("/add-collaborator", (req, res) => projectController.assignCollaboratorToAproject(req, res))

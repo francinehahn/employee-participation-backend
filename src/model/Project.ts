@@ -65,6 +65,17 @@ export interface inputDeleteProjectDTO {
     token: string
 }
 
+export interface inputGetAvgParticipationInAprojectDTO {
+    projectName: string,
+    token: string
+}
+
+export interface outputGetAvgParticipationInAprojectDTO {
+    project_name: string,
+    avg_participation: number
+}
+    
+
 export interface deleteProjectDTO {
     id: string,
     projectName: string

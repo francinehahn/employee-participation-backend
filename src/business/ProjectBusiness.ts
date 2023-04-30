@@ -4,7 +4,7 @@ import { CollaboratorNotFound, DuplicateCollaborator, DuplicateProject, Employee
 import { MissingToken } from "../error/userErrors"
 import { Employee } from "../model/Employee"
 import { IAuthenticator } from "../model/IAuthenticator"
-import { collaborator, deleteCollaboratorDTO, deleteProjectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, outputGetAverageParticipationDTO, updateParticipationDTO } from "../model/Project"
+import { collaborator, deleteCollaboratorDTO, deleteProjectDTO, inputDeleteCollaboratorDTO, inputDeleteProjectDTO, inputEditParticipationDTO, inputEditProjectInfoDTO, inputGetAvgParticipationInAprojectDTO, outputGetAverageParticipationDTO, outputGetAvgParticipationInAprojectDTO, updateParticipationDTO } from "../model/Project"
 import { Project, addCollaboratorDTO, inputAddEmployeeToAprojectDTO, inputRegisterProjectDTO } from "../model/Project"
 import { ProjectRepository } from "../model/repositories/ProjectRepository"
 import { UserRepository } from "../model/repositories/UserRepository"
@@ -195,6 +195,44 @@ export class ProjectBusiness {
             await this.projectDatabase.deleteCollaborator(pull)
             await this.projectDatabase.assignCollaboratorToAproject(push)
             
+        } catch (error: any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
+
+    public getAvgParticipationInAproject = async (input: inputGetAvgParticipationInAprojectDTO): Promise<outputGetAvgParticipationInAprojectDTO> => {
+        try {
+            if (!input.token) {
+                throw new MissingToken()
+            }
+
+            const {id} = await this.authenticator.getTokenData(input.token)
+
+            if (!input.projectName) {
+                throw new MissingProjectName()
+            }
+
+            if (input.projectName.includes(" ")) {
+                throw new InvalidProjectName()
+            }
+
+            const user = await this.userDatabase.getUserById(id)
+            const getProject = user!.projects.filter((project: Project) => project.project_name === input.projectName.replaceAll("-", " "))
+
+            if (getProject.length === 0) {
+                throw new ProjectNotFound()
+            }
+
+            const numberOfCollaborators = getProject[0].collaborators.length
+            const sum = getProject[0].collaborators.reduce((prev, curr) => prev + curr.participation, 0)
+            
+            const result = {
+                project_name: input.projectName.replaceAll("-", " "),
+                avg_participation: sum === 0? 0 : sum / numberOfCollaborators
+            }
+            
+            return result
+
         } catch (error: any) {
             throw new CustomError(error.statusCode, error.message)
         }
