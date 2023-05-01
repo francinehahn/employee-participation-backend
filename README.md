@@ -16,7 +16,6 @@ https://documenter.getpostman.com/view/26335922/2s93RWPr7s
 - Get All Employees
 - Get Employee Info
 - Get Average Participation Of Each Employee
-- Get Average Participation In A Project
 - Register An Employee
 - Register A Project
 - Add Employee To A Project

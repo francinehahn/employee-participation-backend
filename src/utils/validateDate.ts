@@ -6,11 +6,11 @@ export function validateDate (date: string): boolean {
         if (dateArray.length < 3) {
             return false
         }
-
+        
         const day = Number(dateArray[0])
         const month = Number(dateArray[1])
         const year = Number(dateArray[2])
-
+        
         if (year > Number(new Date().getFullYear())) {
             return false
         } else if (year/1000 < 1) {
@@ -19,7 +19,7 @@ export function validateDate (date: string): boolean {
             if (month > Number(new Date().getMonth() + 1)) {
                 return false
             } else if (month === Number(new Date().getMonth() + 1)) {
-                if (day > Number(new Date().getUTCDate())) {
+                if (day > Number(new Date().getDate())) {
                     return false
                 }
             }

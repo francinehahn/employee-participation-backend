@@ -142,11 +142,15 @@ export class EmployeeBusiness {
             user!.projects.forEach(project => {
                 const isAcollaborator = project.collaborators.filter(employee => employee.employee_name === input.employeeName)
                 if (isAcollaborator.length > 0) {
+                    const numberOfCollaborators = project.collaborators.length
+                    const sum = project.collaborators.reduce((prev, curr) => prev + curr.participation, 0)
+
                     projectsEmployeeParticipated.push({
                         project_name: project.project_name,
                         start_date: project.start_date,
                         end_date: project.end_date,
-                        participation: isAcollaborator[0].participation
+                        collaborator_participation: isAcollaborator[0].participation,
+                        avg_participation: sum / numberOfCollaborators
                     })
                 }
             })

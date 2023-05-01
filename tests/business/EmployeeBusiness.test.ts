@@ -291,7 +291,7 @@ describe("Testing the getEmployeeInfo endpoint", () => {
         }
 
         const result = await employeeBusiness.getEmployeeInfo(input)
-        expect(result).toEqual([{"end_date": "03/04/2023", "participation": 20, "project_name": "Labefood", "start_date": "10/12/2022"}])
+        expect(result).toEqual([{"project_name": "Labefood", "start_date": "10/12/2022", "end_date": "03/04/2023", "collaborator_participation": 20, "avg_participation": 20}])
     })
 })
 
