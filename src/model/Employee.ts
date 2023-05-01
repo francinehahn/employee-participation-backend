@@ -38,7 +38,8 @@ export interface outputGetEmployeeInfoDTO {
     project_name: string,
     start_date: string,
     end_date: string,
-    participation: number
+    collaborator_participation: number,
+    avg_participation: number
 }
 
 export interface inputEditEmployeeDTO {

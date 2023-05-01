@@ -200,44 +200,6 @@ export class ProjectBusiness {
         }
     }
 
-    public getAvgParticipationInAproject = async (input: inputGetAvgParticipationInAprojectDTO): Promise<outputGetAvgParticipationInAprojectDTO> => {
-        try {
-            if (!input.token) {
-                throw new MissingToken()
-            }
-
-            const {id} = await this.authenticator.getTokenData(input.token)
-
-            if (!input.projectName) {
-                throw new MissingProjectName()
-            }
-
-            if (input.projectName.includes(" ")) {
-                throw new InvalidSpaces()
-            }
-
-            const user = await this.userDatabase.getUserById(id)
-            const getProject = user!.projects.filter((project: Project) => project.project_name === input.projectName.replaceAll("-", " "))
-
-            if (getProject.length === 0) {
-                throw new ProjectNotFound()
-            }
-
-            const numberOfCollaborators = getProject[0].collaborators.length
-            const sum = getProject[0].collaborators.reduce((prev, curr) => prev + curr.participation, 0)
-            
-            const result = {
-                project_name: input.projectName.replaceAll("-", " "),
-                avg_participation: sum === 0? 0 : sum / numberOfCollaborators
-            }
-            
-            return result
-
-        } catch (error: any) {
-            throw new CustomError(error.statusCode, error.message)
-        }
-    }
-
     public getAvgParticipationOfEachEmployee = async (token: string): Promise<outputGetAverageParticipationDTO[]> => {
         try {
             if (!token) {
